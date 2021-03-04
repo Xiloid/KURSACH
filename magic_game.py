@@ -46,7 +46,7 @@ def magic(all_points):
             break
 
         if counter == 5:
-            print("\nМагічне число було",random_number)
+            print("\nМагічне число було", random_number)
             print("Використано забагато спроб")
             break
     next_action = input("\nСпробувати ще раз?(y/n/menu):")

@@ -17,7 +17,7 @@ def main():
     print(Fore.BLUE + "\n Выберите действие: ", Style.RESET_ALL)
     menu = input()
     if menu == "1":
-        magic_game(all_points)
+        magic(all_points)
     elif menu == "2":
         pass
     elif menu == "3":
