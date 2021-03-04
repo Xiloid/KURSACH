@@ -1,7 +1,7 @@
 import random
 import main
 
-def magic_game(all_points):
+def magic(all_points):
 #    rules()
     random_number = random.randint(1, 10)
     print("Вгадайте Магічне число від 1 до 10")
@@ -52,7 +52,7 @@ def magic_game(all_points):
     next_action = input("\nСпробувати ще раз?(y/n/menu):")
     if next_action == "Y":
         counter = 0
-        magic_game(all_points)
+        magic(all_points)
     elif next_action == "menu":
         main()
     return all_points

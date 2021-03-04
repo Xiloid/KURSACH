@@ -1,5 +1,5 @@
 #import random
-from magic import magic_game
+from magic_game import magic
 #from blackjack import blackjack
 import colorama
 colorama.init()
