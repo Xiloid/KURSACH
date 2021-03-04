@@ -1,5 +1,4 @@
 import random
-#from casino_menu import main
 
 
 def magic(all_points):
@@ -55,6 +54,7 @@ def magic(all_points):
         counter = 0
         magic(all_points)
     elif next_action == "m":
-        exit()
+        return 0
     return all_points
+
 
