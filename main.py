@@ -1,5 +1,5 @@
 #import random
-#from magic import magic
+from magic import magic_game
 #from blackjack import blackjack
 import colorama
 colorama.init()
@@ -17,7 +17,7 @@ def main():
     print(Fore.BLUE + "\n Выберите действие: ", Style.RESET_ALL)
     menu = input()
     if menu == "1":
-        pass
+        magic_game(all_points)
     elif menu == "2":
         pass
     elif menu == "3":
