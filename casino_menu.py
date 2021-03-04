@@ -1,5 +1,5 @@
 from casino_magic import magic
-#from blackjack import blackjack
+from casino_blackjack import blackjack
 import colorama
 colorama.init()
 from colorama import Fore, Style
@@ -23,7 +23,8 @@ def menu():
         magic(all_points)
         main()
     elif menu == "2":
-        pass
+        blackjack()
+        main()
     elif menu == "3":
         pass
     elif menu == "4":
