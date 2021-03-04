@@ -6,7 +6,7 @@ def blackjack():
         start = input('Нажмите Enter что бы начать, для выхода введите Exit \n')
         start = start.lower()
         if start != 'exit':
-            deck = [6, 7, 8, 9, 10, 10, 10, 10, 11] * 4
+            deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11] * 4
             count = 0
             croupier_count = 0
             # перемешали колоду
