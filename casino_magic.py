@@ -2,11 +2,10 @@ import random
 
 
 def magic(all_points):
-#    rules()
+    rules()
     random_number = random.randint(1, 10)
     print("Угадайте число от 1 до 10")
     counter = 0
-    print('Игра начинается\n')
     while True:
         try:
             number = int(input("Ваше число: "))
@@ -49,19 +48,18 @@ def magic(all_points):
             print(f'\nБыло загадано число {random_number}')
             print('Все попытки кончились')
             break
-    next_action = input('\nИграем ещё раз? (y/n/m - меню): ')
-    if next_action == "Y":
+    next_action = input('\nИграем ещё раз? (y/n): \n')
+    if next_action == "y":
         counter = 0
         magic(all_points)
-    elif next_action == "m":
-        return 0
-    return all_points
+    else:
+        return all_points
 
 
 def rules():
-    if input('Введите 'r' для прочтения правил игры или нажмите Enter для продолжения: ') == 'r':
+    if input('Введите "r" для прочтения правил игры или нажмите Enter для продолжения: \n') == 'r':
         print('''
-                Ви попали в гру "Magic",  правила игры:
+                Правила игры "Magic":
                 Компьютер загадывает число, а вы должны угадать его за наименьшее число попыток.
                 Начисление очков за количество попыток:
                 1я попытка - 50 очков
@@ -69,6 +67,6 @@ def rules():
                 3я попытка - 10 очков
                 4я попытка - 5 очков
                 5я попытка - 0 очков
-           ''')
+           \n''')
     else:
-        pass
+        return 0
