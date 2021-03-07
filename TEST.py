@@ -1,8 +1,14 @@
+import json
 import random
 
+player_name = (input('Введите имя игрока: '))
+def_data = {'overall_stat': 0, 'm_all': 0, 'm_win': 0, 'm_koef': 0, 'm_rec': 0,
+            'b_all': 0, 'b_win': 0, 'b_koef': 0}
+with open('data.json') as f:
+    players_data = json.load(f)
+    player_data = players_data.get(player_name, def_data)
 
 def magic(all_points):
-    rules()
     random_number = random.randint(1, 10)
     print("Угадайте число от 1 до 10")
     counter = 0
@@ -20,7 +26,7 @@ def magic(all_points):
         else:
             print(f'\nВы угадали, число {number}')
             print("Попыток:", counter)
-#            random_number = random.randint(1, 10)
+    #            random_number = random.randint(1, 10)
             points_1 = 0
             if counter == 1:
                 print(f"Вам начислено 50 очкев")
@@ -48,25 +54,16 @@ def magic(all_points):
             print(f'\nБыло загадано число {random_number}')
             print('Все попытки кончились')
             break
+
+    with open('data.json', 'r+') as f:
+        players_data = json.load(f)
+        players_data[player_name] = player_data
+        players_data = json.dumps(players_data, indent=4)
+        f.seek(0)
+        f.write(players_data)
+
     next_action = input('\nИграем ещё раз? (y/n): \n')
     if next_action == "y":
-#        counter = 0
         magic(all_points)
     else:
-        return all_points
-
-
-def rules():
-    if input('Введите "r" для прочтения правил игры или нажмите Enter для продолжения: \n') == 'r':
-        print('''
-                Правила игры "Magic":
-                Компьютер загадывает число, а вы должны угадать его за наименьшее число попыток.
-                Начисление очков за количество попыток:
-                1я попытка - 50 очков
-                2я попытка - 25 очков
-                3я попытка - 10 очков
-                4я попытка - 5 очков
-                5я попытка - 0 очков
-           \n''')
-    else:
-        return 0
+        print(all_points)
