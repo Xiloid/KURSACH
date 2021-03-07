@@ -3,7 +3,8 @@ import random
 
 
 def main():
-    magic()
+    stat()
+    # magic()
 
 
 def magic():
@@ -70,6 +71,20 @@ def magic():
         magic()
     else:
         print('EXIT')
+
+
+def stat():
+    player_name = (input('Введите имя игрока: '))
+    with open('data.json') as f:
+        all_file_data = json.load(f)
+        q = all_file_data.get(player_name)
+        print(f'''
+        Количество очков: {q["overall_stat"]}        
+        Всего игр сыграно: {q["m_games"]}
+        Выиграно: {q["m_win"]}
+        Коэффициент выигрышей: {q["m_average"]}
+        Рекордное количество попыток: {q["m_record"]}
+        ''')
 
 
 if __name__ == "__main__":
