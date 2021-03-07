@@ -78,13 +78,30 @@ def stat():
     with open('data.json') as f:
         all_file_data = json.load(f)
         q = all_file_data.get(player_name)
-        print(f'''
-        Количество очков: {q["overall_stat"]}        
-        Всего игр сыграно: {q["m_games"]}
-        Выиграно: {q["m_win"]}
-        Коэффициент выигрышей: {q["m_average"]}
-        Рекордное количество попыток: {q["m_record"]}
-        ''')
+        if q:
+            print(f'''
+            Имя игрока: {player_name}
+            Количество очков: {q["overall_stat"]}
+            
+            ----- MAGIC -----
+            Количество очков: {q["overall_stat"]}        
+            Всего игр сыграно: {q["m_games"]}
+            Выиграно: {q["m_win"]}
+            Коэффициент выигрышей: {q["m_average"]}
+            Рекордное количество попыток: {q["m_record"]}
+            
+            ----- BLACKJACK -----
+            Всего игр сыграно: 
+            Выиграно: 
+            Коэффициент выигрышей: 
+            ''')
+        else:
+            print('Игрок с данным именем не найден!')
+            stat()
+
+
+def del_player():
+    pass
 
 
 if __name__ == "__main__":
