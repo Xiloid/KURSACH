@@ -3,7 +3,8 @@ import random
 
 
 def main():
-    stat()
+    del_player()
+    # stat()
     # magic()
 
 
@@ -101,7 +102,24 @@ def stat():
 
 
 def del_player():
-    pass
+    with open('data.json', 'r') as f:
+        all_file_data = json.load(f)
+        f.close()
+    with open('data.json', 'w') as f:
+        while True:
+            player_name = (input('Введите имя игрока для удаления: '))
+            if all_file_data.get(player_name):
+                all_file_data.pop(player_name)
+                print(all_file_data)
+                f.seek(0)
+                f.write(json.dumps(all_file_data, indent=4))
+                break
+            else:
+                print('Нет такого пользователя, попробуйте снова')
+                continue
+        new_player = (input('Введите имя нового игрока: '))
+        print('записан', new_player)
+        return 0
 
 
 if __name__ == "__main__":
