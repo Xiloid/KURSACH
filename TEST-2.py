@@ -110,16 +110,25 @@ def del_player():
             player_name = (input('Введите имя игрока для удаления: '))
             if all_file_data.get(player_name):
                 all_file_data.pop(player_name)
-                print(all_file_data)
                 f.seek(0)
                 f.write(json.dumps(all_file_data, indent=4))
+                f.close()
                 break
             else:
-                print('Нет такого пользователя, попробуйте снова')
+                print('Нет такого пользователя для удаления, попробуйте снова')
                 continue
-        new_player = (input('Введите имя нового игрока: '))
-        print('записан', new_player)
-        return 0
+    return 0
+
+
+def add_player():
+    def_data = {'overall_stat': 0, 'm_games': 0, 'm_win': 0, 'm_average': 0, 'm_record': 0}
+    pass
+    # with open('data.json', 'r+') as f:
+    #     all_file_data = json.load(f)
+    #     new_player = (input('Введите имя нового игрока: '))
+    #     player_data = all_file_data.get(new_player, def_data)
+    #     print('записан', new_player)
+    return 0
 
 
 if __name__ == "__main__":
