@@ -102,20 +102,21 @@ def stat():
 
 
 def del_player():
-    with open('data.json', 'r') as f:
-        all_file_data = json.load(f)
+    with open('data.json', 'r') as f:       # читаем файл и закрываем, что-бы не было дозаписи
+        all_file_data = json.load(f)        # переменная в которой весь файл
         f.close()
-    with open('data.json', 'w') as f:
-        while True:
+    with open('data.json', 'w') as f:       # открываем снова пустой файл и после операции по удалению...
+        while True:                         # ...записываем значение переменной all_data_file в json
             player_name = (input('Введите имя игрока для удаления: '))
             if all_file_data.get(player_name):
                 all_file_data.pop(player_name)
                 f.seek(0)
                 f.write(json.dumps(all_file_data, indent=4))
                 f.close()
+                print(f'Пользователь "{player_name}" удалён.')
                 break
             else:
-                print('Нет такого пользователя для удаления, попробуйте снова')
+                print(f'Пользователя "{player_name}" нет в базе, попробуйте снова')
                 continue
     return 0
 

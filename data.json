@@ -1,11 +1,4 @@
 {
-    "bob": {
-        "overall_stat": 0,
-        "m_games": 1,
-        "m_win": 1,
-        "m_average": 4.0,
-        "m_record": 4
-    },
     "tim": {
         "overall_stat": 0,
         "m_games": 2,
