@@ -1,16 +1,22 @@
 {
-    "bob": {
-        "overall_stat": 0,
-        "m_games": 0,
-        "m_win": 0,
-        "m_average": 0,
-        "m_record": 0
+    "tom": {
+        "overall_stat": 25,
+        "m_games": 1,
+        "m_win": 1,
+        "m_average": 4.0,
+        "m_record": 4,
+        "b_games": 0,
+        "b_win": 0,
+        "b_average": 0
     },
-    "alex": {
-        "overall_stat": 0,
+    "mike": {
+        "overall_stat": 20,
         "m_games": 0,
         "m_win": 0,
         "m_average": 0,
-        "m_record": 0
+        "m_record": 0,
+        "b_games": 0,
+        "b_win": 0,
+        "b_average": 0
     }
 }

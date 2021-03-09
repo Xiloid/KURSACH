@@ -5,8 +5,8 @@ def magic(all_points):
     rules()
     random_number = random.randint(1, 10)
     print("Угадайте число от 1 до 10")
-    counter = 0
     while True:
+        counter = 0
         try:
             number = int(input("Ваше число: "))
             counter += 1
@@ -50,7 +50,6 @@ def magic(all_points):
             break
     next_action = input('\nИграем ещё раз? (y/n): \n')
     if next_action == "y":
-#        counter = 0
         magic(all_points)
     else:
         return all_points

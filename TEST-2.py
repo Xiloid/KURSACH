@@ -4,21 +4,22 @@ import random
 
 def main():
     # add_player()
-    # del_player()
-    stat()
+    del_player()
+    # stat()
     # magic()
 
 
 def magic():
-    player_name = (input('Введите имя игрока: '))
-    def_data = {'overall_stat': 0, 'm_games': 0, 'm_win': 0, 'm_average': 0, 'm_record': 0}
-    with open('data.json') as f:
-        all_file_data = json.load(f)
-        player_data = all_file_data.get(player_name, def_data)
-
     random_number = random.randint(1, 10)
     counter = 1
     magic_points = 0
+    player_name = (input('Введите имя игрока: '))
+    def_data = {'overall_stat': 20, 'm_games': 0, 'm_win': 0, 'm_average': 0, 'm_record': 0,
+                'b_games': 0, 'b_win': 0, 'b_average': 0}
+    with open('data.json') as f:
+        all_file_data = json.load(f)
+        player_data = all_file_data.get(player_name, def_data)  # если нет игрока, пишем дефолт значение
+
     print("Компьютер загадал число. Отгадайте его. У вас 5 попыток")
     while counter <= 5:
         try:
@@ -35,7 +36,8 @@ def magic():
             break
         counter += 1
     else:
-        print(f'Вы исчерпали 5 попыток. Было загадано число {random_number}')
+        print(f'Вы не угадали с 5 попыток и оштрафованы на 5 очков. Было загадано число {random_number}')
+        player_data['overall_stat'] -= 5  # штраф 5 очков
     if counter == 1:
         magic_points = 20
         print(f'Вам начислено {magic_points} очков')
@@ -48,21 +50,21 @@ def magic():
     elif counter == 4:
         magic_points = 5
         print(f'Вам начислено {magic_points} очков')
-    else:
-        print('Вам не начислено очков, т.к. магическое число угадано с последней попытки')
-    print(magic_points)
+    elif player_data['overall_stat'] <= 0:
+        print('Вы банкрот (персональных очков ноль или минус), игра начисляет Вам первоначальные 20 очков.')
+        player_data['overall_stat'] += 25
+    player_data['overall_stat'] += magic_points  # плюсуем заработанные очки
 
     if not player_data['m_record'] or player_data['m_record'] > counter:
         player_data['m_record'] = counter
     if counter < 5:
-        player_data['m_win'] += 1
-    games = player_data['m_games']
-    avg = player_data['m_average']
-    player_data['m_games'] += 1
-    player_data['m_average'] = (games * avg + counter) / (games + 1)
+        player_data['m_win'] += 1   # если угадано до 5 попыток, плюсуем счетчик "выигрышей"
+    games = player_data['m_games']  # переменная кол-ва игр
+    avg = player_data['m_average']  # переменная для высчета среднего коэффициента
+    player_data['m_games'] += 1  # плюсуем счетчик игр всего
+    player_data['m_average'] = round((games * avg + counter) / (games + 1), 2)  # средний коэффициент, округл. до 2 зн.
 
-    with open('data.json', 'r+') as f:
-        all_file_data = json.load(f)
+    with open('data.json', 'w') as f:
         all_file_data[player_name] = player_data
         f.seek(0)
         f.write(json.dumps(all_file_data, indent=4))
@@ -92,9 +94,9 @@ def stat():
             Рекордное количество попыток: {player_data["m_record"]}
             
             ----- BLACKJACK -----
-            Всего игр сыграно: 
-            Выиграно: 
-            Коэффициент выигрышей: 
+            Всего игр сыграно: {player_data["b_games"]}
+            Выиграно: {player_data["b_win"]}
+            Коэффициент выигрышей: {player_data["b_average"]}
             ''')
         else:
             print('Игрок с данным именем не найден!')
@@ -109,12 +111,21 @@ def del_player():
         while True:                         # ...записываем значение переменной all_data_file в json
             player_name = (input('Введите имя игрока для удаления: '))
             if all_file_data.get(player_name):
-                all_file_data.pop(player_name)
-                f.seek(0)
-                f.write(json.dumps(all_file_data, indent=4))
-                f.close()
-                print(f'Игрок "{player_name}" удалён.')
-                break
+                if input(f'''
+                Вы точно хотите удалить игрока "{player_name}" и всю его статистику??
+                Эти действия необратимы!!
+                Введите "yes" для продолжения или любую клавишу для отмены\n''') == 'yes':
+                    all_file_data.pop(player_name)
+                    f.seek(0)
+                    f.write(json.dumps(all_file_data, indent=4))
+                    f.close()
+                    print(f'\nИгрок "{player_name}" удалён из базы.')
+                    break
+                else:
+                    f.write(json.dumps(all_file_data, indent=4))
+                    f.close()
+                    exit('выход....')
+                    # del_player()  # тут переход обратно в меню
             else:
                 print(f'Игрока "{player_name}" нет в базе, попробуйте снова!')
                 continue
@@ -122,7 +133,8 @@ def del_player():
 
 
 def add_player():
-    def_data = {'overall_stat': 0, 'm_games': 0, 'm_win': 0, 'm_average': 0, 'm_record': 0}
+    def_data = {'overall_stat': 20, 'm_games': 0, 'm_win': 0, 'm_average': 0, 'm_record': 0,
+                'b_games': 0, 'b_win': 0, 'b_average': 0}
     with open('data.json') as f:
         all_file_data = json.load(f)
         f.close()
