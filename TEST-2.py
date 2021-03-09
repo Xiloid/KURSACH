@@ -4,8 +4,8 @@ import random
 
 def main():
     # add_player()
-    del_player()
-    # stat()
+    # del_player()
+    stat()
     # magic()
 
 
@@ -77,7 +77,7 @@ def magic():
 
 
 def stat():
-    player_name = (input('Введите имя игрока: '))
+    player_name = (input('\nВведите имя игрока: '))
     with open('data.json') as f:
         all_file_data = json.load(f)
         player_data = all_file_data.get(player_name)
@@ -87,7 +87,6 @@ def stat():
             Общее количество очков: {player_data["overall_stat"]}
             
             ----- MAGIC -----
-            Количество очков: {player_data["overall_stat"]}        
             Всего игр сыграно: {player_data["m_games"]}
             Выиграно: {player_data["m_win"]}
             Коэффициент выигрышей: {player_data["m_average"]}
@@ -99,7 +98,7 @@ def stat():
             Коэффициент выигрышей: {player_data["b_average"]}
             ''')
         else:
-            print('Игрок с данным именем не найден!')
+            print(f'Игрок "{player_name}" не найден в базе!')
             stat()
 
 
