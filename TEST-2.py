@@ -3,8 +3,9 @@ import random
 
 
 def main():
-    del_player()
-    # stat()
+    # add_player()
+    # del_player()
+    stat()
     # magic()
 
 
@@ -63,9 +64,8 @@ def magic():
     with open('data.json', 'r+') as f:
         all_file_data = json.load(f)
         all_file_data[player_name] = player_data
-        all_file_data = json.dumps(all_file_data, indent=4)
         f.seek(0)
-        f.write(all_file_data)
+        f.write(json.dumps(all_file_data, indent=4))
 
     next_action = input('\nИграем ещё раз? (y/n): \n')
     if next_action == "y":
@@ -78,18 +78,18 @@ def stat():
     player_name = (input('Введите имя игрока: '))
     with open('data.json') as f:
         all_file_data = json.load(f)
-        q = all_file_data.get(player_name)
-        if q:
+        player_data = all_file_data.get(player_name)
+        if player_data:
             print(f'''
             Имя игрока: {player_name}
-            Количество очков: {q["overall_stat"]}
+            Общее количество очков: {player_data["overall_stat"]}
             
             ----- MAGIC -----
-            Количество очков: {q["overall_stat"]}        
-            Всего игр сыграно: {q["m_games"]}
-            Выиграно: {q["m_win"]}
-            Коэффициент выигрышей: {q["m_average"]}
-            Рекордное количество попыток: {q["m_record"]}
+            Количество очков: {player_data["overall_stat"]}        
+            Всего игр сыграно: {player_data["m_games"]}
+            Выиграно: {player_data["m_win"]}
+            Коэффициент выигрышей: {player_data["m_average"]}
+            Рекордное количество попыток: {player_data["m_record"]}
             
             ----- BLACKJACK -----
             Всего игр сыграно: 
@@ -113,22 +113,33 @@ def del_player():
                 f.seek(0)
                 f.write(json.dumps(all_file_data, indent=4))
                 f.close()
-                print(f'Пользователь "{player_name}" удалён.')
+                print(f'Игрок "{player_name}" удалён.')
                 break
             else:
-                print(f'Пользователя "{player_name}" нет в базе, попробуйте снова')
+                print(f'Игрока "{player_name}" нет в базе, попробуйте снова!')
                 continue
     return 0
 
 
 def add_player():
     def_data = {'overall_stat': 0, 'm_games': 0, 'm_win': 0, 'm_average': 0, 'm_record': 0}
-    pass
-    # with open('data.json', 'r+') as f:
-    #     all_file_data = json.load(f)
-    #     new_player = (input('Введите имя нового игрока: '))
-    #     player_data = all_file_data.get(new_player, def_data)
-    #     print('записан', new_player)
+    with open('data.json') as f:
+        all_file_data = json.load(f)
+        f.close()
+    with open('data.json', 'w') as f:
+        while True:
+            player_name = (input('Введите имя нового игрока: '))
+            if all_file_data.get(player_name):
+                print(f'Игрок "{player_name}" уже есть в базе, введите другое имя!')
+                continue
+            else:
+                player_data = all_file_data.get(player_name, def_data)
+                all_file_data[player_name] = player_data
+                f.seek(0)
+                f.write(json.dumps(all_file_data, indent=4))
+                f.close()
+                print(f'Игрок "{player_name}" записан!')
+                break
     return 0
 
 
