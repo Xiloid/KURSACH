@@ -1,52 +1,47 @@
 import random
 
 
-# def blackjack():
-while True:
-    start = input('Нажмите Enter что бы начать, для выхода введите "exit" \n')
-    # start = start.lower()
-    if start != 'exit':
-        deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11] * 4
-        count = 0
-        croupier_count = 0
-        random.shuffle(deck)          # перемешали колоду
-        croupier_current = deck.pop()          # переменные для крупье
-        croupier_count += croupier_current
-        print('Добро пожаловать в игру 21!: ')
-        print('У крупье {} очков'.format(croupier_current))
+def main():
+    blackjack()
 
-        while True:
-            choise = input('У вас {} очков, что бы взять карту нажмите "y" или "n" что бы остановиться: '.format(count))
-            # choise = choise.lower()
-            if choise == 'y':
-                current = deck.pop()
-                print('Вам попалась карта достоинством {}'.format(current))
-                count += current
-                if count > 21:
-                    print('У вас перебор')
-                    break
-                elif count == 21:
-                    print('Вы выиграли')
-                    break
+
+def blackjack():
+    while True:
+        start = input('\nНажмите Enter что бы начать или введите "q" для выхода \n')
+        # тут переменная ставки в размере не большем, чем общее количетсво очков
+        if start != 'q':
+            deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11] * 4
+            count = 0
+            random.shuffle(deck)
+
+            while True:
+                choice = input('\nЕщё карту: "y" Если хватит: "n" ')
+                if choice == 'y':
+                    current = deck.pop()
+                    if current == 11 and count > 10:
+                        current = 1
+                        print(f'\nВыпал "Туз", и т.к. на руках {count} очков, трактуем его как 1')
+                    count += current
+                    print(f'\nВам попалась карта достоинством {current}, теперь у вас {count} очков')
+                    if count > 21:
+                        print('\nК сожалению у Вас перебор!')
+                        # проигрыш (ставка снимается в пользу казино)
+                        break
+                    elif count == 21:
+                        print(f'\nПоздравляем, Вы выиграли! Ваша ставка {None} возвращена в удвоенном размере!')
+                        # ставка = ставка * 2
+                        # игроку возвращается удвоенная ставка
+                        break
                 else:
-                    print('')
-            else:
-                print('У вас {} очков, крупье берет карту: '.format(count))
-                while True:      # блок добора и сравнения карт крупье
-                    if croupier_count >= 17:
-                        if count <= croupier_count <= 21:
-                            print('Вы проиграли!, у вас {} у крупье {}'.format(count, croupier_count))
-                            break
-                        else:
-                            print('Вы выиграли, набрав {} очков'.format(count))
-                            break
-                    else:
-                        if croupier_count < 17:
-                            croupier_current = deck.pop()
-                            croupier_count += croupier_current
-                            print('Крупье взял еще и ему выпало {}, у крупье {}'.format(croupier_current,
-                                                                                      croupier_count))
-                break
-    else:
-        break
-    print('quit')
+                    print(f'\nПас! На руках {count} очков. Ваша ставка {None} возвращена')
+                    # записываем очки обратно и закрываем файл?
+                    # ставка возвращается игроку
+                    break
+        else:
+            break
+        print('\nПока!')
+        # возврат в меню
+
+
+if __name__ == "__main__":
+    main()

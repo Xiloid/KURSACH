@@ -1,5 +1,5 @@
 import json
-from casino_magic import magic
+from casino_rules import magic
 from casino_blackjack import blackjack
 #import ast
 

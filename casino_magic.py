@@ -1,71 +1,158 @@
+import json
 import random
 
 
-def magic(all_points):
-    rules()
+def main():
+    # add_player()
+    # del_player()
+    stat()
+    # magic()
+
+
+def magic():
     random_number = random.randint(1, 10)
-    print("Угадайте число от 1 до 10")
-    while True:
-        counter = 0
+    counter = 1
+    magic_points = 0
+    player_name = (input('Введите имя игрока: '))
+    def_data = {'overall_stat': 20, 'm_games': 0, 'm_win': 0, 'm_average': 0, 'm_record': 0,
+                'b_games': 0, 'b_win': 0, 'b_average': 0}
+    with open('data.json') as f:
+        all_file_data = json.load(f)
+        player_data = all_file_data.get(player_name, def_data)  # если нет игрока, пишем дефолт значение
+
+    print("Компьютер загадал число. Отгадайте его. У вас 5 попыток")
+    while counter <= 5:
         try:
-            number = int(input("Ваше число: "))
-            counter += 1
+            number = int(input(str(counter) + '-я попытка: '))
         except ValueError:
-            print('Должно быть число')
+            print('Должно быть целое число!')
             continue
         if number > random_number:
-            print(f'магическое число меньше {number}')
+            print('Много')
         elif number < random_number:
-            print(f'магическое число больше {number}')
+            print('Мало')
         else:
-            print(f'\nВы угадали, число {number}')
-            print("Попыток:", counter)
-#            random_number = random.randint(1, 10)
-            points_1 = 0
-            if counter == 1:
-                print(f"Вам начислено 50 очкев")
-                points_1 = 50
-            elif counter == 2:
-                print("Вам начислено 25 очков")
-                points_1 = 25
-            elif counter == 3:
-                print("Вам начислено 10 очков")
-                points_1 = 10
-            elif counter == 4:
-                print("Вам начислено 5 очков")
-                points_1 = 5
-            else:
-                print("Вам начислено 0 очков")
-
-            if all_points == 0:
-                all_points = points_1
-            else:
-                all_points += points_1
-            print(f'Теперь у вас {all_points} очков')
+            print(f'Вы угадали с {counter}-й попытки')
             break
+        counter += 1
+    else:
+        print(f'Вы не угадали с 5 попыток и оштрафованы на 5 очков. Было загадано число {random_number}')
+        player_data['overall_stat'] -= 5  # штраф 5 очков
+    if counter == 1:
+        magic_points = 20
+        print(f'Вам начислено {magic_points} очков')
+    elif counter == 2:
+        magic_points = 15
+        print(f'Вам начислено {magic_points} очков')
+    elif counter == 3:
+        magic_points = 10
+        print(f'Вам начислено {magic_points} очков')
+    elif counter == 4:
+        magic_points = 5
+        print(f'Вам начислено {magic_points} очков')
+    elif player_data['overall_stat'] <= 0:
+        print('Вы банкрот (персональных очков ноль или минус), игра начисляет Вам первоначальные 20 очков.')
+        player_data['overall_stat'] += 25
+    player_data['overall_stat'] += magic_points  # плюсуем заработанные очки
 
-        if counter == 5:
-            print(f'\nБыло загадано число {random_number}')
-            print('Все попытки кончились')
-            break
+    if not player_data['m_record'] or player_data['m_record'] > counter:
+        player_data['m_record'] = counter
+    if counter < 5:
+        player_data['m_win'] += 1   # если угадано до 5 попыток, плюсуем счетчик "выигрышей"
+    games = player_data['m_games']  # переменная кол-ва игр
+    avg = player_data['m_average']  # переменная для высчета среднего коэффициента
+    player_data['m_games'] += 1  # плюсуем счетчик игр всего
+    player_data['m_average'] = round((games * avg + counter) / (games + 1), 2)  # средний коэффициент, округл. до 2 зн.
+
+    with open('data.json', 'w') as f:
+        all_file_data[player_name] = player_data
+        f.seek(0)
+        f.write(json.dumps(all_file_data, indent=4))
+
     next_action = input('\nИграем ещё раз? (y/n): \n')
     if next_action == "y":
-        magic(all_points)
+        magic()
     else:
-        return all_points
+        print('EXIT')
 
 
-def rules():
-    if input('Введите "r" для прочтения правил игры или нажмите Enter для продолжения: \n') == 'r':
-        print('''
-                Правила игры "Magic":
-                Компьютер загадывает число, а вы должны угадать его за наименьшее число попыток.
-                Начисление очков за количество попыток:
-                1я попытка - 50 очков
-                2я попытка - 25 очков
-                3я попытка - 10 очков
-                4я попытка - 5 очков
-                5я попытка - 0 очков
-           \n''')
-    else:
-        return 0
+def stat():
+    player_name = (input('\nВведите имя игрока: '))
+    with open('data.json') as f:
+        all_file_data = json.load(f)
+        player_data = all_file_data.get(player_name)
+        if player_data:
+            print(f'''
+            Имя игрока: {player_name}
+            Общее количество очков: {player_data["overall_stat"]}
+            
+            ----- MAGIC -----
+            Всего игр сыграно: {player_data["m_games"]}
+            Выиграно: {player_data["m_win"]}
+            Коэффициент выигрышей: {player_data["m_average"]}
+            Рекордное количество попыток: {player_data["m_record"]}
+            
+            ----- BLACKJACK -----
+            Всего игр сыграно: {player_data["b_games"]}
+            Выиграно: {player_data["b_win"]}
+            Коэффициент выигрышей: {player_data["b_average"]}
+            ''')
+        else:
+            print(f'Игрок "{player_name}" не найден в базе!')
+            stat()
+
+
+def del_player():
+    with open('data.json', 'r') as f:       # читаем файл и закрываем, что-бы не было дозаписи
+        all_file_data = json.load(f)        # переменная в которой весь файл
+        f.close()
+    with open('data.json', 'w') as f:       # открываем снова пустой файл и после операции по удалению...
+        while True:                         # ...записываем значение переменной all_data_file в json
+            player_name = (input('Введите имя игрока для удаления: '))
+            if all_file_data.get(player_name):
+                if input(f'''
+                Вы точно хотите удалить игрока "{player_name}" и всю его статистику??
+                Эти действия необратимы!!
+                Введите "yes" для продолжения или любую клавишу для отмены\n''') == 'yes':
+                    all_file_data.pop(player_name)
+                    f.seek(0)
+                    f.write(json.dumps(all_file_data, indent=4))
+                    f.close()
+                    print(f'\nИгрок "{player_name}" удалён из базы.')
+                    break
+                else:
+                    f.write(json.dumps(all_file_data, indent=4))
+                    f.close()
+                    exit('выход....')
+                    # del_player()  # тут переход обратно в меню
+            else:
+                print(f'Игрока "{player_name}" нет в базе, попробуйте снова!')
+                continue
+    return 0
+
+
+def add_player():
+    def_data = {'overall_stat': 20, 'm_games': 0, 'm_win': 0, 'm_average': 0, 'm_record': 0,
+                'b_games': 0, 'b_win': 0, 'b_average': 0}
+    with open('data.json') as f:
+        all_file_data = json.load(f)
+        f.close()
+    with open('data.json', 'w') as f:
+        while True:
+            player_name = (input('Введите имя нового игрока: '))
+            if all_file_data.get(player_name):
+                print(f'Игрок "{player_name}" уже есть в базе, введите другое имя!')
+                continue
+            else:
+                player_data = all_file_data.get(player_name, def_data)
+                all_file_data[player_name] = player_data
+                f.seek(0)
+                f.write(json.dumps(all_file_data, indent=4))
+                f.close()
+                print(f'Игрок "{player_name}" записан!')
+                break
+    return 0
+
+
+if __name__ == "__main__":
+    main()
