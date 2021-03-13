@@ -20,13 +20,16 @@ def blackjack(player_name):
         counter = 0
         start = input('\nНажмите "Enter" что бы начать игру или введите "q" для выхода \n')
         if start != 'q':
+            if player_points <= 0:
+                print('Ой, Вы банкрот (персональных очков ноль или минус), игра дает Вам в кредит 20 очков :)')
+                player_points += 20
+                continue
             bet = int(input('Сделайте Вашу ставку: '))
             if player_points < bet:  # проверка, можно ли игроку столько ставить или нет очков
                 print(f'Ваша ставка "{bet}" больше, чем общее количество Ваших очков: {player_points}')
                 continue
             player_points -= bet  # забираем очки в размере ставки сразу
             player_data['b_games'] += 1
-            # games += 1  # инкремент количества игр
             deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11] * 4
             count = 0
             random.shuffle(deck)
