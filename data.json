@@ -1,13 +1,13 @@
 {
     "tom": {
-        "overall_stat": 25,
+        "overall_stat": 0,
         "m_games": 1,
         "m_win": 1,
         "m_average": 4.0,
         "m_record": 4,
-        "b_games": 0,
-        "b_win": 0,
-        "b_average": 0
+        "b_games": 18,
+        "b_win": 2,
+        "b_average": 3.24
     },
     "mike": {
         "overall_stat": 20,
@@ -18,5 +18,15 @@
         "b_games": 0,
         "b_win": 0,
         "b_average": 0
+    },
+    "qwe": {
+        "overall_stat": 5,
+        "m_games": 0,
+        "m_win": 0,
+        "m_average": 0,
+        "m_record": 0,
+        "b_games": 5,
+        "b_win": 0,
+        "b_average": 2.75
     }
 }

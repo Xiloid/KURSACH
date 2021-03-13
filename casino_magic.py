@@ -51,7 +51,7 @@ def magic():
         magic_points = 5
         print(f'Вам начислено {magic_points} очков')
     elif player_data['overall_stat'] <= 0:
-        print('Вы банкрот (персональных очков ноль или минус), игра начисляет Вам первоначальные 20 очков.')
+        print('Вы банкрот (персональных очков ноль или минус), игра дает Вам в кредит 20 очков :)')
         player_data['overall_stat'] += 25
     player_data['overall_stat'] += magic_points  # плюсуем заработанные очки
 
@@ -68,6 +68,7 @@ def magic():
         all_file_data[player_name] = player_data
         f.seek(0)
         f.write(json.dumps(all_file_data, indent=4))
+        f.close()
 
     next_action = input('\nИграем ещё раз? (y/n): \n')
     if next_action == "y":
@@ -134,7 +135,7 @@ def del_player():
 def add_player():
     def_data = {'overall_stat': 20, 'm_games': 0, 'm_win': 0, 'm_average': 0, 'm_record': 0,
                 'b_games': 0, 'b_win': 0, 'b_average': 0}
-    with open('data.json') as f:
+    with open('data.json') as f:        # считываем весь файл в переменную и закрываем, что бы не было "наслоений"
         all_file_data = json.load(f)
         f.close()
     with open('data.json', 'w') as f:
