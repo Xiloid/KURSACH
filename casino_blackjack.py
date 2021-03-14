@@ -36,7 +36,7 @@ def blackjack(player_name):
             random.shuffle(deck)
 
             while True:
-                choice = input(Fore.GREEN+ '\nЕщё карту: "y" Если хватит: "n" ' + Style.RESET_ALL)
+                choice = input(Fore.GREEN + '\nЕщё карту: "y" Если хватит: "n" ' + Style.RESET_ALL)
                 if choice == 'y':
                     counter += 1
                     current = deck.pop()
