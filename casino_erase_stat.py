@@ -27,59 +27,11 @@ def erase(player_name):
                         print('\nДействие по очистке статистики отменено.')
                         break
             else:
-                print(f'\nИгрока "{player_name}" нет в базе, попробуйте снова!')
+                print(f'\nИгрока "{player_name}" нет в базе, попробуйте снова!\n'
+                      f'Или начните любую игру, для добавления в базу как "{player_name}"')
+                input('Нажмите ENTER для продолжения...')
                 break
     return 0
-
-
-# def del_player(player_name):
-#     with open('data.json', 'r') as f:       # читаем файл и закрываем, что-бы не было дозаписи
-#         all_file_data = json.load(f)        # переменная в которой весь файл
-#         f.close()
-#     with open('data.json', 'w') as f:       # открываем снова пустой файл и после операции по удалению...
-#         while True:                         # ...записываем значение переменной all_data_file в json
-#             if all_file_data.get(player_name):
-#                 if input(f'''\n
-#                 Вы точно хотите удалить игрока "{player_name}" и всю его статистику??
-#                 Это действие необратимо!
-#                 Введите "yes" для продолжения или любую клавишу для отмены\n''') == 'yes':
-#                     all_file_data.pop(player_name)
-#                     f.seek(0)
-#                     f.write(json.dumps(all_file_data, indent=4))
-#                     f.close()
-#                     print(f'\nИгрок "{player_name}" удалён из базы.')
-#                     break
-#                 else:
-#                     f.write(json.dumps(all_file_data, indent=4))
-#                     f.close()
-#                     print('\nДействие по удалению отменено.')
-#                     break
-#             else:
-#                 print(f'\nИгрока "{player_name}" нет в базе, попробуйте снова!')
-#                 continue
-#     return 0
-
-
-# def add_player(player_name):
-#     def_data = {'overall_stat': 20, 'm_games': 0, 'm_win': 0, 'm_average': 0, 'm_record': 0,
-#                 'b_games': 0, 'b_win': 0, 'b_average': 0}
-#     with open('data.json') as f:        # считываем весь файл в переменную и закрываем, что бы не было "наслоений"
-#         all_file_data = json.load(f)
-#         f.close()
-#     with open('data.json', 'w') as f:
-#         while True:
-#             if all_file_data.get(player_name):
-#                 print(f'\nИгрок "{player_name}" уже есть в базе, введите другое имя!')
-#                 continue
-#             else:
-#                 player_data = all_file_data.get(player_name, def_data)
-#                 all_file_data[player_name] = player_data
-#                 f.seek(0)
-#                 f.write(json.dumps(all_file_data, indent=4))
-#                 f.close()
-#                 print(f'\nИгрок "{player_name}" успешно записан!')
-#                 break
-#     return 0
 
 
 def stat(player_name):
@@ -103,6 +55,7 @@ def stat(player_name):
             Коэффициент выигрышей: {player_data["b_average"]}
             ''')
         else:
-            print(f'\nИгрок "{player_name}" не найден в базе игроков!')
+            print(f'\nИгрока "{player_name}" нет в базе, попробуйте снова!\n'
+                  f'Или начните любую игру, для добавления в базу как "{player_name}"')
             input('Нажмите ENTER для продолжения...')
             return 0
