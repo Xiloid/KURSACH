@@ -1,13 +1,13 @@
 {
     "tom": {
-        "overall_stat": 27,
-        "m_games": 2,
-        "m_win": 2,
-        "m_average": 2.5,
-        "m_record": 1,
-        "b_games": 3,
+        "overall_stat": 20,
+        "m_games": 0,
+        "m_win": 0,
+        "m_average": 0,
+        "m_record": 0,
+        "b_games": 0,
         "b_win": 0,
-        "b_average": 3.67
+        "b_average": 0
     },
     "bob": {
         "overall_stat": 35,
