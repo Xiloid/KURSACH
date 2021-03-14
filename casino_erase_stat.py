@@ -54,8 +54,9 @@ def stat(player_name):
             Выиграно: {player_data["b_win"]}
             Коэффициент выигрышей: {player_data["b_average"]}
             ''')
+            input('Нажмите ENTER для продолжения...')
         else:
             print(f'\nИгрока "{player_name}" нет в базе, попробуйте снова!\n'
                   f'Или начните любую игру, для добавления в базу как "{player_name}"')
             input('Нажмите ENTER для продолжения...')
-            return 0
+    return 0

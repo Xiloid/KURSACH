@@ -2,18 +2,10 @@ import json
 import random
 
 
-def main():
-    # add_player()
-    # del_player()
-    stat()
-    # magic()
-
-
 def magic(player_name):
     random_number = random.randint(1, 10)
     counter = 1
     magic_points = 0
-    #  player_name = (input('Введите имя игрока: '))
     def_data = {'overall_stat': 20, 'm_games': 0, 'm_win': 0, 'm_average': 0, 'm_record': 0,
                 'b_games': 0, 'b_win': 0, 'b_average': 0}
     with open('data.json') as f:
@@ -72,10 +64,6 @@ def magic(player_name):
 
     next_action = input('\nИграем ещё раз? (y/n): \n')
     if next_action == "y":
-        magic()
+        magic(player_name)
     else:
-        print('EXIT')
-
-
-if __name__ == "__main__":
-    main()
+        return 0
