@@ -1,20 +1,20 @@
 {
     "tom": {
-        "overall_stat": 40,
+        "overall_stat": 27,
         "m_games": 2,
         "m_win": 2,
         "m_average": 2.5,
         "m_record": 1,
-        "b_games": 2,
+        "b_games": 3,
         "b_win": 0,
-        "b_average": 4.0
+        "b_average": 3.67
     },
     "bob": {
-        "overall_stat": 20,
-        "m_games": 0,
-        "m_win": 0,
-        "m_average": 0,
-        "m_record": 0,
+        "overall_stat": 35,
+        "m_games": 1,
+        "m_win": 1,
+        "m_average": 2.0,
+        "m_record": 2,
         "b_games": 0,
         "b_win": 0,
         "b_average": 0
@@ -35,6 +35,16 @@
         "m_win": 0,
         "m_average": 0,
         "m_record": 0,
+        "b_games": 0,
+        "b_win": 0,
+        "b_average": 0
+    },
+    "554654": {
+        "overall_stat": 25,
+        "m_games": 1,
+        "m_win": 1,
+        "m_average": 4.0,
+        "m_record": 4,
         "b_games": 0,
         "b_win": 0,
         "b_average": 0

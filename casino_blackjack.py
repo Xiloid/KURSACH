@@ -1,10 +1,8 @@
 import random
 import json
-
-
-def main():
-    player_name = (input('Введите имя игрока: '))
-    blackjack(player_name)
+from colorama import Fore, Style
+from colorama import init
+init()
 
 
 def blackjack(player_name):
@@ -18,15 +16,18 @@ def blackjack(player_name):
     avg = player_data['b_average']  # переменная для высчета среднего коэффициента
     while True:
         counter = 0
-        start = input('\nНажмите "Enter" что бы начать игру или введите "q" для выхода \n')
+        start = input(Fore.MAGENTA + '\nНажмите "Enter" что бы начать игру или введите "q" для '
+                                     'выхода \n' + Style.RESET_ALL)
         if start != 'q':
             if player_points <= 0:
-                print('Ой, Вы банкрот (персональных очков ноль или минус), игра дает Вам в кредит 20 очков :)')
+                print(Fore.RED + 'Ой, Вы банкрот (персональных очков ноль или минус), игра дает Вам в кредит 20 '
+                                 'очков :)' + Style.RESET_ALL)
                 player_points += 20
                 continue
-            bet = int(input('Сделайте Вашу ставку: '))
+            bet = int(input(Fore.BLUE + 'Сделайте Вашу ставку: ' + Style.RESET_ALL))
             if player_points < bet:  # проверка, можно ли игроку столько ставить или нет очков
-                print(f'Ваша ставка "{bet}" больше, чем общее количество Ваших очков: {player_points}')
+                print(Fore.RED + f'Ваша ставка "{bet}" больше, чем общее количество Ваших очков: '
+                                 f'{player_points}' + Style.RESET_ALL)
                 continue
             player_points -= bet  # забираем очки в размере ставки сразу
             player_data['b_games'] += 1
@@ -35,41 +36,40 @@ def blackjack(player_name):
             random.shuffle(deck)
 
             while True:
-                # counter += 1
-                choice = input('\nЕщё карту: "y" Если хватит: "n" ')
+                choice = input(Fore.GREEN+ '\nЕщё карту: "y" Если хватит: "n" ' + Style.RESET_ALL)
                 if choice == 'y':
                     counter += 1
                     current = deck.pop()
                     if current == 11 and count > 10:
                         current = 1
-                        print(f'\nВыпал "Туз", и т.к. на руках {count} очков, трактуем его как 1')
+                        print(Fore.CYAN + f'\nВыпал "Туз", и т.к. на руках {count} очков, трактуем его '
+                                          f'как 1' + Style.RESET_ALL)
                     count += current
-                    print(f'\nВам попалась карта достоинством {current}, теперь у вас {count} очков')
+                    print(Fore.LIGHTGREEN_EX + f'\nВам попалась карта достоинством {current}, теперь у вас {count} '
+                                               f'очков' + Style.RESET_ALL)
                     if count > 21:
-                        print(f'\nК сожалению у Вас перебор! Ваша ставка в {bet} очков снимается в пользу казино!')
-                        # Ничего не делаем, т.к. очки уже забрали в начале (ставка снимается в пользу казино)
+                        print(Fore.RED + f'\nК сожалению у Вас перебор! Ваша ставка в {bet} очков снимается в пользу '
+                                         f'казино!' + Style.RESET_ALL)
                         break
                     elif count == 21:
-                        print(f'\nПоздравляем, Вы выиграли! Ваша ставка "{bet}" возвращена в удвоенном размере!')
+                        print(Fore.CYAN + f'\nПоздравляем, Вы выиграли! Ваша ставка "{bet}" возвращена в удвоенном '
+                                          f'размере!' + Style.RESET_ALL)
                         player_points += bet * 2  # игроку возвращается удвоенная ставка
                         player_data['b_win'] += 1
                         break
                 else:
-                    print(f'\nПас! На руках {count} очков. Ваша ставка "{bet}" возвращена')
+                    print(Fore.CYAN + f'\nПас! На руках {count} очков. Ваша ставка "{bet}" '
+                                      f'возвращена' + Style.RESET_ALL)
                     player_points += bet  # возврат очков обратно
                     break
         else:
             break
         player_data['b_average'] = round((games * avg + counter) / (games + 1), 2)  # средний коэффициент
-    # тут возврат в меню
     player_data['overall_stat'] = player_points
     with open('data.json', 'w') as f:
         all_file_data[player_name] = player_data
         f.seek(0)
         f.write(json.dumps(all_file_data, indent=4))
         f.close()
-    print('\nПока! Пока!')
-
-
-if __name__ == "__main__":
-    main()
+    print(Fore.BLUE + '\nПока! Пока!' + Style.RESET_ALL)
+    return 0

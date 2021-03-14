@@ -1,22 +1,25 @@
 from casino_magic import magic
 from casino_blackjack import blackjack
 from casino_erase_stat import stat, erase
+from colorama import Fore, Style
+from colorama import init
+init()
 
 
 def main():
-    player_name = input('Добро пожаловать в казино! Введите Ваше имя: ')
+    player_name = input(Fore.LIGHTGREEN_EX + 'Добро пожаловать в казино! Введите Ваше имя: ' + Style.RESET_ALL)
     menu(player_name)
 
 
 def menu(player_name):
-    print('\nГлавное меню:\
+    print(Fore.GREEN + '\nГлавное меню:\
                 \n  1. Игра Magic\
                 \n  2. Игра BlackJack\
                 \n  3. Посмотреть статистику\
                 \n  4. Сбросить игровой прогресс\
                 \n  5. Прочитать правила игр\
-                \n  6. Выход')
-    choice = input(f'\n {str.capitalize(player_name)}, выберите действие: ')
+                \n  6. Выход' + Style.RESET_ALL)
+    choice = input(f'\n {str.capitalize(player_name)}, выберите действие и нажмите ENTER: ')
     if choice == '1':
         rules_magic()
         magic(player_name)
@@ -36,14 +39,14 @@ def menu(player_name):
         rules_bj()
         menu(player_name)
     elif choice == '6':
-        exit('\nДо скорых встреч!')
+        exit(Fore.BLUE + '\nДо скорых встреч!' + Style.RESET_ALL)
     else:
-        print('Выберите правильную цифру пункта меню!')
+        print(Fore.RED + 'Выберите правильную цифру пункта меню!' + Style.RESET_ALL)
         menu(player_name)
 
 
 def rules_magic():
-    print('''
+    print(Fore.LIGHTYELLOW_EX + '''
             Правила игры "Magic":
             Изначально у Вас 20 очков.
             Компьютер загадывает число, а Вы должны угадать его за наименьшее число попыток.
@@ -55,13 +58,13 @@ def rules_magic():
             Число угадано с 5й попытки - 0 очков
             Если Вы истратили все попытки, игра штрафует Вас на 5 очков. При нулевом или отрицательном балансе 
             очков - игра начисляет 20 очков. 
-       \n''')
-    input('Нажмите ENTER для продолжения...')
+       \n''' + Style.RESET_ALL)
+    input(Fore.BLUE + 'Нажмите ENTER для продолжения...' + Style.RESET_ALL)
     return 0
 
 
 def rules_bj():
-    print('''
+    print(Fore.LIGHTYELLOW_EX + '''
             Правила игры "BlackJack":
             Изначально у Вас 20 очков.
             Формируется колода из 56 карт, цель игры - вытянуть количествово карт соответствующее числу 21.
@@ -74,8 +77,8 @@ def rules_bj():
             Если Вы остановились на сумме меньше 21 - Ваша ставка возвращается;
             Если у Вас в сумме выходит больше 21 (перебор) - проигрыш (ставка снимается в пользу игры);
             При нулевом или отрицательном балансе очков - игра начисляет 20 очков.
-       \n''')
-    input('Нажмите ENTER для продолжения...')
+       \n'''  + Style.RESET_ALL)
+    input(Fore.BLUE + 'Нажмите ENTER для продолжения...' + Style.RESET_ALL)
     return 0
 
 

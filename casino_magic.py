@@ -1,5 +1,8 @@
 import json
 import random
+from colorama import Fore, Style
+from colorama import init
+init()
 
 
 def magic(player_name):
@@ -12,38 +15,40 @@ def magic(player_name):
         all_file_data = json.load(f)
         player_data = all_file_data.get(player_name, def_data)  # если нет игрока, пишем дефолт значение
 
-    print("Компьютер загадал число. Отгадайте его. У вас 5 попыток")
+    print(Fore.LIGHTGREEN_EX + 'Компьютер загадал число. Отгадайте его. У вас 5 попыток' + Style.RESET_ALL)
     while counter <= 5:
         try:
             number = int(input(str(counter) + '-я попытка: '))
         except ValueError:
-            print('Должно быть целое число!')
+            print(Fore.RED + 'Должно быть целое число!' + Style.RESET_ALL)
             continue
         if number > random_number:
-            print('Много')
+            print(Fore.CYAN + 'Много' + Style.RESET_ALL)
         elif number < random_number:
-            print('Мало')
+            print(Fore.CYAN + 'Мало' + Style.RESET_ALL)
         else:
-            print(f'Вы угадали с {counter}-й попытки')
+            print(Fore.CYAN + f'Вы угадали с {counter}-й попытки' + Style.RESET_ALL)
             break
         counter += 1
     else:
-        print(f'Вы не угадали с 5 попыток и оштрафованы на 5 очков. Было загадано число {random_number}')
+        print(Fore.RED + f'Вы не угадали с 5 попыток и оштрафованы на 5 очков. Было загадано число {random_number}'
+              + Style.RESET_ALL)
         player_data['overall_stat'] -= 5  # штраф 5 очков
     if counter == 1:
         magic_points = 20
-        print(f'Вам начислено {magic_points} очков')
+        print(Fore.CYAN + f'Вам начислено {magic_points} очков' + Style.RESET_ALL)
     elif counter == 2:
         magic_points = 15
-        print(f'Вам начислено {magic_points} очков')
+        print(Fore.CYAN + f'Вам начислено {magic_points} очков' + Style.RESET_ALL)
     elif counter == 3:
         magic_points = 10
-        print(f'Вам начислено {magic_points} очков')
+        print(Fore.CYAN + f'Вам начислено {magic_points} очков' + Style.RESET_ALL)
     elif counter == 4:
         magic_points = 5
-        print(f'Вам начислено {magic_points} очков')
+        print(Fore.CYAN + f'Вам начислено {magic_points} очков' + Style.RESET_ALL)
     elif player_data['overall_stat'] <= 0:
-        print('Ой, Вы банкрот! (персональных очков ноль или минус), игра дает Вам в кредит 20 очков :)')
+        print(Fore.RED + 'Ой, Вы банкрот! (персональных очков ноль или минус), игра дает Вам в кредит 20 очков :)'
+              + Style.RESET_ALL)
         player_data['overall_stat'] += 25
     player_data['overall_stat'] += magic_points  # плюсуем заработанные очки
 
@@ -62,7 +67,7 @@ def magic(player_name):
         f.write(json.dumps(all_file_data, indent=4))
         f.close()
 
-    next_action = input('\nИграем ещё раз? (y/n): \n')
+    next_action = input(Fore.BLUE + '\nИграем ещё раз? (y/n): \n' + Style.RESET_ALL)
     if next_action == "y":
         magic(player_name)
     else:
